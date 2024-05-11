@@ -1,0 +1,126 @@
+"""
+Задание на л.р. №6
+Задание состоит из двух частей.
+1 часть – написать программу в соответствии со своим вариантом задания. Написать 2 варианта формирования
+(алгоритмический и с помощью функций Питона), сравнив по времени их выполнение.
+2 часть – усложнить написанную программу, введя по своему усмотрению в условие минимум
+одно ограничение на характеристики объектов (которое будет сокращать количество переборов) и целевую функцию
+для нахождения оптимального решения.
+Вариант 4. Дан одномерный массив.
+Сформировать все возможные варианты данного массива путем замены отрицательных элементов на нечетных местах модулями.
+"""
+import itertools
+import time
+import random
+
+
+# 1 часть
+n = int(input("Введите натуральное число N: "))
+arr = [random.randint(-5, 5) for i in range(n)]
+middle_length = n // 2
+print(arr)
+
+# С помощью функций Питона -- начало
+start_func = time.time()
+
+
+def replace_negatives(arr, mask):
+    return [abs(arr[i]) if mask[i] and (i % 2 == 0) and (arr[i] < 0) else arr[i] for i in range(len(arr))]
+
+
+all_variants = [replace_negatives(arr, mask) for mask in itertools.product([0, 1], repeat=n)]
+combinations = []
+for i in all_variants:
+    if i not in combinations and i != arr:
+        combinations.append(i)
+
+
+if len(combinations) == 0:
+    print()
+    print("Ваш массив не удовлетворяет условию задачи. Перезапустите программу")
+else:
+    print()
+    print("Все возможные варианты: (Функции питона)")
+    print()
+    for i in combinations:
+        print(i, end=" ")
+        print()
+
+end_func = time.time()
+
+print()
+print("С помощью функций питона: {:>.5f}".format(end_func-start_func) + " секунд.")
+
+# С помощью функций Питона -- конец
+
+#  Алгоритмический -- начало
+print()
+start_alg = time.time()
+# Инициализация списка masks
+masks = []
+for i in range(2**n):
+    mask = bin(i)[2:].zfill(n)
+    masks.append(list(mask))
+
+for mask in masks:
+    for j in range(len(mask)):
+        mask[j] = int(mask[j])
+
+alg_var = [replace_negatives(arr, mask) for mask in masks]
+var = []
+for i in alg_var:
+    if i not in var and i != arr:
+        var.append(i)
+
+if len(var) == 0:
+    print("Ваш массив не удовлетворяет условию задачи. Перезапустите программу")
+    fl = False
+else:
+    fl = True
+    print("Все возможные варианты: (Алгоритмический метод)")
+    for i in var:
+        print(i, end=" ")
+        print()
+
+end_alg = time.time()
+print("Алгоритмический метод: {:>.5f}".format(end_alg-start_alg) + " секунд.")
+
+print()
+
+print("Разница по времени {:>.5f}".format(abs((end_alg-start_alg) - (end_func-start_func))) + " секунд.")
+
+#  Алгоритмический -- конец
+# 2 часть
+
+# Ограничение
+if fl:
+    print()
+    K = int(input("Введите количество (K) отрицательных чисел, которые меньше или равно в массиве: "))
+    flag = bool
+
+    values = []
+    for i in range(len(var)):
+        neg_count = sum(1 for x in var[i] if x < 0)
+        if neg_count <= K:
+            values.append(var[i])
+
+    print()
+    if len(values) == 0:
+        print("Число K не удовлетворяет условию. Перезапустите программу")
+        flag = False
+    else:
+        print(values)
+        flag = True
+
+
+    if flag:
+        min_sum = float('inf')
+        optimal_variant = None
+        for variant in values:
+            current_sum = sum(variant)
+            if current_sum < min_sum:
+                min_sum = current_sum
+                optimal_variant = variant
+
+        print("Массив:", optimal_variant)
+        print("Минимальная сумма:", min_sum)
