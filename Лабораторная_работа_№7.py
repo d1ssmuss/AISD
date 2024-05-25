@@ -48,13 +48,13 @@ def show_context_k():
         print("Параметр K не задан")
 
 
-label_n = Label(text="Введите длину массива (N): ", font=("Arial", 14))
+label_n = Label(text="Введите длину массива: ", font=("Arial", 14))
 label_n.pack(anchor="nw")
 
 len_arr = Entry(tk, width=25, font=("Arial", 15))
 len_arr.pack(anchor="nw")
 
-label_k = Label(text="Введите кол-во отрицательных чисел меньше или равно в массивах (K): ", font=("Arial", 14))
+label_k = Label(text="Введите кол-во отрицательных чисел меньше или равно в массивах: ", font=("Arial", 14))
 label_k.pack(anchor="nw")
 
 argument_K = Entry(tk, width=25, font=("Arial", 15))
