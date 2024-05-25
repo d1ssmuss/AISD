@@ -15,21 +15,18 @@ import timeit
 import matplotlib.pyplot as plt
 
 
-# Функция для вычисления факториала числа
 last_factorial = 1
 def dynamic_factorial(n):
     global last_factorial
     last_factorial = n * last_factorial
     return last_factorial
 
-# Рекурсивная функция для вычисления факториала
 def recursive_factorial(n):
     if n == 1:
         return 1
     else:
         return n * recursive_factorial(n-1)
 
-# Итеративная функция для вычисления факториала
 
 def iterative_factorial(n):
     result = 1
@@ -40,7 +37,7 @@ def iterative_factorial(n):
 last_G_value = 1
 last_F_value = 1
 
-# Функция для вычисления значения G
+# G
 def dynamic_G(n):
     global last_G_value, last_F_value
     if n == 1:
@@ -49,7 +46,7 @@ def dynamic_G(n):
         last_G_value = dynamic_factorial(n-1) + dynamic_G(n-1)
         return last_G_value
 
-# Функция для вычисления значения F
+# F
 step = 1
 def dynamic_F(n):
     global last_G_value, last_F_value
@@ -61,7 +58,7 @@ def dynamic_F(n):
         last_F_value = step * (dynamic_factorial(n) // dynamic_F(n-1) - dynamic_G(n-1))
         return last_F_value
 
-# Функция для записи времени
+# Время time.time
 def score_time(func, n):
     return timeit.timeit(lambda: func(n), number=1000)
 
@@ -71,18 +68,18 @@ recursive_times = []
 iterative_times = []
 
 
-# Измерение времени выполнения для каждого значения n
+
 for n in n_values:
     recursive_times.append(score_time(recursive_factorial, n))
     iterative_times.append(score_time(iterative_factorial, n))
 
 
-# Вывод результатов в табличной форме
+# Табличка
 print(f"{'n':<10}{'Рекурсивное время (мс)':<25}{'Итерационное время (мс)':<25}")
 for i, n in enumerate(n_values):
     print(f"{n:<10}{recursive_times[i]:<25}{iterative_times[i]:<25}")
 
-# Построение и вывод графика результатов
+# График
 plt.plot(n_values, recursive_times, label='Рекурсивно')
 plt.plot(n_values, iterative_times, label='Итерационно')
 plt.xlabel('n')
