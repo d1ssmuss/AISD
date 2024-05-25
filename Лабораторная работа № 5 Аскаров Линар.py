@@ -47,7 +47,6 @@ def dynamic_G(n):
         return last_G_value
 
 # F
-step = 1
 def dynamic_F(n):
     global last_G_value, last_F_value
     if n == 1:
@@ -66,7 +65,7 @@ def score_time(func, n):
 n_values = range(2, 100)
 recursive_times = []
 iterative_times = []
-
+step = 1
 
 
 for n in n_values:
