@@ -1,61 +1,85 @@
-"""Задание на л.р. №8 ООП 24
-Требуется написать объектно-ориентированную программу с графическим интерфейсом в соответствии со своим вариантом.
-В программе должны быть реализованы минимум один класс, три атрибута, четыре метода (функции).
-Ввод данных из файла с контролем правильности ввода.
-Базы данных использовать нельзя. При необходимости сохранять информацию в виде файлов, разделяя значения запятыми или пробелами.
-Для GUI использовать библиотеку tkinter.
-ИСТбд-13
-Вариант 4
-Объекты – отрезки
-Функции:	сегментация
-визуализация
-раскраска
-перемещение на плоскости
-"""
+"Program n_0"
+# Импортирую библиотеки
 from tkinter import *
-import math
-
-# Добавить кнопки
-
-
-tk = Tk()
-canvas = Canvas(bg="white", width=1360, height=720)  # canvas
-canvas.pack(anchor=CENTER)
-
-# Создаю линию
-canvas.create_line(85, 85, 365, 365, fill="blue", width=5, dash=100)  # width - изменяет толщину фигуры
-canvas.create_line(42, 85, 860, 365, fill="orange", width=5, dash=150)
-canvas.create_line(46, 128, 749, 389, fill="green", width=9)  # dash - сегментация ?
-
-tk.title("Лабораторная Работа №8 (Алгоритмы и Структуры Данных)")
-tk.geometry("1070x720")
-
-btn_left = Button(text="<-", width=3, height=3)
-btn_right = Button(text="->", width=3, height=3)
-btn_up = Button(text="^", width=3, height=3)
-btn_down = Button(text="V", width=3, height=3)
-btn_left.place(x=0, y=0) # place или pack
-btn_right.place(x=100, y=1)
-btn_up.place(x=300, y=150)
-btn_down.place(x=420, y=130)
+import tkinter as tk
+from tkinter import ttk
+from tkinter.messagebox import showerror, showwarning, showinfo
 
 
-class Line:
-    def __init__(self, x1, y1, x2, y2):  # (x1;y1) - нач.координаты, (x2;y2) - конеч.координаты
-        self.x1 = x1
-        self.y1 = y1
-        self.x2 = x2
-        self.y2 = y2
+class TicTacToe:
+    def __init__(self, master):
+        self.master = master
+        self.master.title('Крестики нолики v1.0')
+        self.master.geometry('%dx%d+%d+%d' % (1585, 900, 150, 50))
 
-    def paint(self):
-        colors = ['red', 'green', 'blue', 'yellow', 'purple', 'black']  # атрибут
+        # добавляю ** background **
+        self.master.config(bg="#6c6bb2")
+
+        # Заголовок игры
+        self.game_title = Label(master, text="Крестики нолики X.O", font=("Tahoma", 59), background="#6c6bb2",
+                                foreground="#ffffff")
+        self.game_title.pack(pady=50)  # Центрируем заголовок
+
+        # Кнопки
+        self.play_two_person = Button(master, text="На двоих", font=("Tahoma", 45),
+                   activebackground="#3b3fc5",
+                   activeforeground="white",
+                   anchor="center",
+                   bd=3,
+                   bg="lightgray",
+                   disabledforeground="gray",
+                   #fg="black",
+                   highlightbackground="black",
+                   highlightcolor="green",
+                   highlightthickness=2,
+                   justify="center",
+                   overrelief="raised",
+                   padx=10,
+                   pady=5,
+                   width=15)
+        self.play_ai = Button(master, text="Против Компьютера", font=("Tahoma", 45), activebackground="#3b3fc5",
+                   activeforeground="white",
+                   anchor="center",
+                   bd=3,
+                   bg="lightgray",
+                   disabledforeground="gray",
+                   #fg="black",
+                   highlightbackground="black",
+                   highlightcolor="green",
+                   highlightthickness=2,
+                   justify="center",
+                   overrelief="raised",
+                   padx=10,
+                   pady=5,
+                   width=20)
+        self.exit = Button(master, text="Выйти из игры", font=("Tahoma", 45), command=master.destroy, activebackground="#3b3fc5",
+                   activeforeground="white",
+                   anchor="center",
+                   bd=3,
+                   bg="lightgray",
+                   disabledforeground="gray",
+                   #fg="black",
+                   highlightbackground="black",
+                   highlightcolor="green",
+                   highlightthickness=2,
+                   justify="center",
+                   overrelief="raised",
+                   padx=10,
+                   pady=5,
+                   width=15)
+
+        # Размещаем кнопки
+        self.play_two_person.pack(pady=20)  # Вертикальное расположение
+        self.play_ai.pack(pady=20)
+        self.exit.pack(pady=20)
 
 
-
-# Segment - отрезок(рус.)
-
-Segment = Line(5, 5, 25, 25)
+    def main_menu(self):
+        pass
 
 
-
-tk.mainloop()
+if __name__ == "__main__":
+    root = Tk()
+    app = TicTacToe(root)
+    root.mainloop()
+    print("return 0")  # потом убрать
