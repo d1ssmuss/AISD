@@ -65,12 +65,11 @@ class TicTacToe:
                            pady=5,
                            width=15)
 
-        # Размещаем кнопки
         self.play_two_person.pack(pady=20)
         self.play_ai.pack(pady=20)
         self.exit.pack(pady=20)
 
-        self.current_player = "X"  # Игрок, который сейчас ходит
+        self.current_player = "X"  
         self.maps = [""] * 9  # Инициализируем игровую карту
         self.is_ai_game = False  # Флаг, указывающий, играем ли мы против AI
 
@@ -134,15 +133,15 @@ class TicTacToe:
                     self.AI()
 
     def check_winner(self, player):
-        # Проверка строк
+        # Строки
         for row in range(3):
             if all(self.buttons[row][col]['text'] == player for col in range(3)):
                 return True
-        # Проверка столбцов
+        # Столбцы
         for col in range(3):
             if all(self.buttons[row][col]['text'] == player for row in range(3)):
                 return True
-        # Проверка диагоналей
+        # Диагонали
         if all(self.buttons[i][i]['text'] == player for i in range(3)):
             return True
         if all(self.buttons[i][2 - i]['text'] == player for i in range(3)):
