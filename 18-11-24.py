@@ -12,15 +12,15 @@ BLACK = (0, 0, 0)
 GREEN = (0, 255, 0)
 
 # Create the window
-screen = pygame.display.set_mode(WINDOW_SIZE)
+screen = pygame.display.set_mode(WINDOW_SIZE, pygame.NOFRAME)
 pygame.display.set_caption("Шахматы")
 
 # Load images
-board_image = pygame.image.load('board.jpg')
-king_image = pygame.image.load('wK.png')
-black_king_image = pygame.image.load('bK.png')
-black_night_image = pygame.image.load("bN.png")
-white_rook_image = pygame.image.load("wR.png")
+board_image = pygame.image.load('Chess\Board.jpg')
+king_image = pygame.image.load('Chess\wK.png')
+black_king_image = pygame.image.load('Chess\BK.png')
+black_night_image = pygame.image.load("Chess\BN.png")
+white_rook_image = pygame.image.load("Chess\wR.png")
 
 king_image = pygame.transform.smoothscale(king_image.convert_alpha(), (SQUARE_SIZE, SQUARE_SIZE))
 black_king_image = pygame.transform.smoothscale(black_king_image.convert_alpha(), (SQUARE_SIZE, SQUARE_SIZE))
@@ -36,6 +36,20 @@ white_rook_pos = (7, 7)  # Position of the rook
 
 selected_square = None
 selected_piece = None  # Track which piece is selected
+player = None # Кто ходит первый
+
+
+board = [
+    ["", "♞", "", "", "♚", "", "♞", ""],
+    ["", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", ""],
+    ["", "", "", "", "♔", "", "", "♖"]
+]
+
 
 # Initialize font
 font_numbers = pygame.font.Font(None, 35)
@@ -51,16 +65,18 @@ def draw_board(selected_square=None, possible_moves=[]):
     # Draw letters and numbers on the board
     for i in range(GRID_SIZE):
         # Draw numbers on the left side
-        number_color = (0, 0, 0)  # Red color for numbers
-        number_text = font_numbers.render(str(GRID_SIZE - i), True, number_color)
+        color_for_black_square = (157, 107, 70, 255)  # Blue color for letters
+        color_for_white_square = (238, 218, 183, 255)  # Blue color for letters
+        if i % 2 == 0:
+            number_text = font_numbers.render(str(GRID_SIZE - i), True, color_for_white_square)
+            letter_text = font_letters.render(chr(97 + i), True, color_for_white_square)  # 97 is the ASCII value for 'a'
+        else:
+            number_text = font_numbers.render(str(GRID_SIZE - i), True, color_for_black_square)
+            letter_text = font_letters.render(chr(97 + i), True, color_for_black_square)  # 97 is the ASCII value for 'a'
         screen.blit(number_text, (785, (i * SQUARE_SIZE + SQUARE_SIZE // 2 - number_text.get_height() // 2) - 35))
-
-        # Draw letters on the bottom
-        letter_color = (0, 0, 0)  # Blue color for letters
-        letter_text = font_letters.render(chr(97 + i), True, letter_color)  # 97 is the ASCII value for 'a'
         screen.blit(letter_text,
                     ((i * SQUARE_SIZE + SQUARE_SIZE // 2 - letter_text.get_width() // 2) - 40,
-                     WINDOW_SIZE[0] - 25))  # Adjust the position as needed
+                     WINDOW_SIZE[0] - 27))  # Adjust the position as needed
 
 
 
